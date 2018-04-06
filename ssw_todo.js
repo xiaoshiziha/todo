@@ -12,37 +12,34 @@ var e = function(selector) {
 // 给 add button 绑定添加 todo 事件
 var addButton = e('#id-button-add')
 addButton.addEventListener('click', function(){
-    // 获得 input.value
     var todoInput = e('#id-input-todo')
-    //.value可获取input框中的值
     var todo = todoInput.value
-    // 添加到 container 中
+    //ssw//默认false，代表未完成，这是个套路
     insertTodo(todo, false)
-    // 添加之后 保存 todos
     saveTodos()
 })
 
 var insertTodo = function(todo, done) {
-    // 添加到 container 中
     var todoContainer = e('.task-list')
     var t = templateTodo(todo, done)
-    // 这个方法用来添加元素
-    // 第一个参数 'beforeend' 是放在最后
     todoContainer.insertAdjacentHTML('beforeend', t);
 }
 
 var templateTodo = function(todo, done) {
     var status = ''
+    var b = 'check'
+    //如果事项已完成，done为true，则将默认css（未完成）的class更改为完成状态
     if(done) {
         status = 'done'
+        b = 'checked'
     }
     var t = `
         <div class='task-item ${status}'>
-            <input class="todo-done" type="checkbox">
+            <span class='${b} '></span>
             <span class='todo-content' contenteditable='false'>${todo}</span>
             <span class='fr'>
-                <span class='todo-delete'>删除</span>
-                <span class='todo-bianji'>编辑</span>
+                <span class='todo-bianji'></span>
+                <span class='todo-delete'></span>
             </span>
         </div>
     `
@@ -50,44 +47,36 @@ var templateTodo = function(todo, done) {
 }
 var todoContainer = e('.task-list')
 
-// 通过 event.target 的 class 来检查点击的是什么
+
 todoContainer.addEventListener('click', function(event){
-    log('container click', event, event.target)
     var target = event.target
-    // classList.contains 可以检查元素是否有一个 class
-    if(target.classList.contains('todo-done')) {
-        log('done')
-        // target.parentElement 用来获取按钮的父节点
-        // 给 todo div 开关一个状态 class
+    if(target.classList.contains('check')) {
         var todoDiv = target.parentElement
         toggleClass(todoDiv, 'done')
-        // 改变 todo 完成状态之后，保存 todos
+        var todoDiv1 = target
+        toggleClass(todoDiv1, 'checked')
         saveTodos()
     } else if (target.classList.contains('todo-delete')) {
-        log('delete')
-        // 找到按钮的父节点并且删除
+        // log('delete')
         var todoDiv = target.parentElement.parentElement
         todoDiv.remove()
-        // 删除之后 保存 todos
         saveTodos()
     } else if (target.classList.contains('todo-bianji')) {
-        log('bianji')
+        // log('bianji')
         var todoDiv = target.parentElement.parentElement
-        log(todoDiv)
-        var span = todoDiv.children[1] //父元素的第四个子元素
+        // log(todoDiv)
+        var span = todoDiv.children[1]
         span.setAttribute('contenteditable', 'true')
         span.focus()
     }
 })
 todoContainer.addEventListener('blur', function(event){
-    log('container blur', event, event.target)
-    var target = event.target.parentElement
-    // classList.contains 可以检查元素是否有一个 class
+    var target = event.target
     if(target.classList.contains('todo-content')) {
-        log('done')
         saveTodos()
         //让span不可编辑
         target.setAttribute('contenteditable', 'false')
+        log
     }
 }, true)
 
@@ -102,7 +91,7 @@ var toggleClass = function(element, className) {
         element.classList.add(className)
     }
 }
-// 用于把 数组 写入 localStorage
+// 把 数组 写入 localStorage
 var save = function(array) {
     var s = JSON.stringify(array)
     localStorage.todos = s
@@ -132,7 +121,7 @@ var saveTodos = function() {
 }
 var loadTodos = function() {
     var todos = load()
-    log('load todos', todos)
+    // log('load todos', todos)
     // 添加到页面中
     for (var i = 0; i < todos.length; i++) {
         var todo = todos[i]
@@ -158,7 +147,7 @@ loadTodos()
 // d.getMilliseconds()
 // 毫秒, 0-999
 // d.getDay()
-// 星期几, 0-6
+// 星期几, 0-6//功能待添加
 var now = function() {
     var d = new Date()
     var nm = d.getFullYear()
