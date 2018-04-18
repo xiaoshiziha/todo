@@ -75,8 +75,7 @@ todoContainer.addEventListener('blur', function(event){
     if(target.classList.contains('todo-content')) {
         saveTodos()
         //让span不可编辑
-        target.setAttribute('contenteditable', 'false')
-        log
+        target.setAttribute('contenteditable', 'false')        
     }
 }, true)
 
