@@ -38,7 +38,7 @@ var templateTodo = function(todo, done) {
             <span class='${b} '></span>
             <span class='todo-content' contenteditable='false'>${todo}</span>
             <span class='fr'>
-                <span class='todo-bianji'></span>
+                <span class='todo-edit'></span>
                 <span class='todo-delete'></span>
             </span>
         </div>
@@ -61,8 +61,8 @@ todoContainer.addEventListener('click', function(event){
         var todoDiv = target.parentElement.parentElement
         todoDiv.remove()
         saveTodos()
-    } else if (target.classList.contains('todo-bianji')) {
-        // log('bianji')
+    } else if (target.classList.contains('todo-edit')) {
+        // log('edit')
         var todoDiv = target.parentElement.parentElement
         // log(todoDiv)
         var span = todoDiv.children[1]
