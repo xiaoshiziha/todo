@@ -64,7 +64,10 @@ todoContainer.addEventListener('click', function(event){
         var todoDiv = target.parentElement.parentElement
         todoDiv.remove()
         saveTodos()
+<<<<<<< HEAD
         //编辑操作
+=======
+>>>>>>> b6b08604e67fbd9779bb0560ff0b8aeece1fe373
     } else if (target.classList.contains('todo-edit')) {
         // log('edit')
         var todoDiv = target.parentElement.parentElement
